@@ -9,12 +9,11 @@ Msg .= "3) En appuyant sur <CTRL> + <NUMPAD> vous pouvez switch de personnage su
 Msg .= "4) Pour déplacer sa team avec les flèches du clavier:`r"
 Msg .= "- Setup le curseur pour chaque direction: <Alt> + <Flèche directionnelle>`r"
 Msg .= "- Se déplacer avec: <Ctrl> + <Flèche directionnelle>`r`r"
-Msg .= "Vicaster"
 MsgBox, % Msg
 ;******************
 
 
-;delayTime := 300
+;delayTime := 250
 ; Message demandant de renseigner le delais entre chaque action
 InputBox, delayTime, Temps entre chaque action,`rRenseignez le temps (en miliseconde soit 1000 = 1sec) entre chaque action.`r`rPour un ordinateur puissant je recommende 300 ou 350 sinon je vous conseil 500`, c'est une bonne moyenne, , 480, 240
 if ErrorLevel
@@ -98,21 +97,17 @@ move(d, comptes, x, y)
 				if WinExist(compte) 
 				{
 					WinActivate
-					Sleep %d%
+					d2 := % d + 300
+					Random, delay, % d, % d2
+					Sleep % delay
 					Click %x% %y%
-					Sleep 50
+					Random, ShortDelay, 40, 80
+					Sleep % ShortDelay
 					Click %x% %y%
 					res = % Ind
 				}
 			}
 		}
-		; Si vous souhaitez revenir sur votre perso principale decommentez les quatres lignes qui suivent.
-		;(Je deconseil car il est preferable d'attendre que son dernier perso ai fini de changer de map pour relancer une action de deplacement)
-
-		; Sleep %d%
-		; if WinExist(comptes[1]) {
-		; 	WinActivate
-		; }
 	}
 	return res
 }
