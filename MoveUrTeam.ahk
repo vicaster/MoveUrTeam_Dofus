@@ -34,7 +34,7 @@ Loop %windows%
 	WinGetTitle wt, ahk_id %id%
 	if (wt)
 	{
-		IfInString, wt,	Google
+		IfInString, wt,	Dofus
 		{
 			if (i > 0) {
 				result .= "|"
