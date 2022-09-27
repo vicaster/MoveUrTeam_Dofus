@@ -9,3 +9,6 @@ Une fois installé il vous suffit simplement de lancer vos comptes dofus puis le
 Voila.
 
 Profitez bien. :)
+
+
+Uniquement pour Windows.. :'(
