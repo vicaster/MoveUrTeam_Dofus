@@ -15,7 +15,7 @@ MsgBox, % Msg
 
 ;delayTime := 250
 ; Message demandant de renseigner le delais entre chaque action
-InputBox, delayTime, Temps entre chaque action,`rRenseignez le temps (en miliseconde soit 1000 = 1sec) entre chaque action.`r`rPour un ordinateur puissant je recommende 300 ou 350 sinon je vous conseil 500`, c'est une bonne moyenne, , 480, 240
+InputBox, delayTime, Temps entre chaque action,`rRenseignez le temps (en miliseconde soit 1000 = 1sec) entre chaque action.`r`rPour un ordinateur puissant je recommende 250 ou 300 sinon je vous conseil 500`, c'est une bonne moyenne, , 480, 240
 if ErrorLevel
 	ExitApp
 ;******************
@@ -97,11 +97,12 @@ move(d, comptes, x, y)
 				if WinExist(compte) 
 				{
 					WinActivate
-					d2 := % d + 300
+					Random, ad, 50, 150
+					d2 := d + ad
 					Random, delay, % d, % d2
 					Sleep % delay
 					Click %x% %y%
-					Random, ShortDelay, 40, 80
+					Random, ShortDelay, 40, 95
 					Sleep % ShortDelay
 					Click %x% %y%
 					res = % Ind
@@ -201,8 +202,8 @@ goto(name_page)
 		}
 		return
 
-	; La touche <)> permet de faire un Alt + Esc
-	)::Send, !{Esc}
+	; La touche <(> permet de faire un Alt + Esc
+	;(::Send, !{Esc}
 
 
 	;Ouvre la fenetre du perso 1
