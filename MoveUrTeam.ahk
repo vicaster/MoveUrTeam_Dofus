@@ -33,7 +33,7 @@ Loop %windows%
 	WinGetTitle wt, ahk_id %id%
 	if (wt)
 	{
-		IfInString, wt,	Dofus
+		IfInString, wt,	- Dofus
 		{
 			if (i > 0) {
 				result .= "|"
@@ -102,9 +102,9 @@ move(d, comptes, x, y)
 					Random, delay, % d, % d2
 					Sleep % delay
 					Click %x% %y%
-					Random, ShortDelay, 40, 95
-					Sleep % ShortDelay
-					Click %x% %y%
+					;Random, ShortDelay, 40, 95
+					;Sleep % ShortDelay
+					;Click %x% %y%
 					res = % Ind
 				}
 			}
@@ -135,28 +135,28 @@ goto(name_page)
 		MouseGetPos, x, y
 		ArrowUp[1] := x
 		ArrowUp[2] := y
-		MsgBox, setup ArrowUp
+		;MsgBox, setup ArrowUp
 		return
 		
 	Alt & Down::
 		MouseGetPos, x, y
 		ArrowDown[1] := x
 		ArrowDown[2] := y
-		MsgBox, setup ArrowDown
+		;MsgBox, setup ArrowDown
 		return
 		
 	Alt & Left::
 		MouseGetPos, x, y
 		ArrowLeft[1] := x
 		ArrowLeft[2] := y
-		MsgBox, setup ArrowLeft
+		;MsgBox, setup ArrowLeft
 		return
 		
 	Alt & Right::
 		MouseGetPos, x, y
 		ArrowRight[1] := x
 		ArrowRight[2] := y
-		MsgBox, setup ArrowRight
+		;MsgBox, setup ArrowRight
 		return
 
 
@@ -189,18 +189,18 @@ goto(name_page)
 		return
 
 	; Switch de fenetre pour aller au perso suivant
-	&::
-		index += 1
-		if WinExist(comptes[index]) {
-			WinActivate
-		}
-		else {
-			index = 1
-			if WinExist(comptes[index]) {
-				WinActivate
-			}
-		}
-		return
+	;&::
+	;	index += 1
+	;	if WinExist(comptes[index]) {
+	;		WinActivate
+	;	}
+	;	else {
+	;		index = 1
+	;		if WinExist(comptes[index]) {
+	;			WinActivate
+	;		}
+	;	}
+	;	return
 
 	; La touche <(> permet de faire un Alt + Esc
 	;(::Send, !{Esc}
