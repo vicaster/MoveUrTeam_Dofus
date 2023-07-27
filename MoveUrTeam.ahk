@@ -40,7 +40,7 @@ Loop %windows%
 	WinGetTitle wt, ahk_id %id%
 	if (wt)
 	{
-		IfInString, wt, - Dofus
+		IfInString, wt, o
 		{
 			if (i > 0) {
 				result .= "|"
@@ -151,7 +151,7 @@ heal(d, comptes, x, y)
 					Sleep % delay
 					Click %x% %y%
 
-					Random, shortDelay, 75, 125
+					Random, shortDelay, 100, 150
 					Sleep % shortDelay
 					Click %x% %y% Right
 
@@ -240,7 +240,7 @@ goto(name_page)
 		return
 
 
-	; Deplacement de la team vec les fleches <CTRL> + <UP, DOWN, LEFT, RIGHT>
+	; Deplacement de la team avec les fleches <CTRL> + <UP, DOWN, LEFT, RIGHT>
 	LCtrl & Up::index = % move(delayTime, comptes, ArrowUp[1], ArrowUp[2])
 	LCtrl & Down::index = % move(delayTime, comptes, ArrowDown[1], ArrowDown[2])
 	LCtrl & Left::index = % move(delayTime, comptes, ArrowLeft[1], ArrowLeft[2])
@@ -339,7 +339,7 @@ goto(name_page)
 	
 	;<Ctrl> + <Esc> permet de fermer le script
 	^Esc::
-	MsgBox, A Bientot :)
+	MsgBox, à bientot :)
 	ExitApp
 
 ;******************	
