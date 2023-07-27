@@ -18,8 +18,6 @@ Move_click(x, y, Positionx, Positiony)
 	if (Positionx && Positiony)
 	{
 		Click %Positionx%, %Positiony%
-		;Random, timer, 5, 10
-		;Sleep % timer
 		MouseMove x, y
 	}
 	else {

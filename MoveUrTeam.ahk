@@ -268,23 +268,8 @@ goto(name_page)
 		}
 		return
 
-	; Switch de fenetre pour aller au perso suivant
-	;&::
-	;	index += 1
-	;	if WinExist(comptes[index]) {
-	;		WinActivate
-	;	}
-	;	else {
-	;		index = 1
-	;		if WinExist(comptes[index]) {
-	;			WinActivate
-	;		}
-	;	}
-	;	return
-
 	; La touche <(> permet de faire un Alt + Esc
 	;(::Send, !{Esc}
-
 
 	;Ouvre la fenetre du perso 1
 	Numpad1::
