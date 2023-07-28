@@ -1,9 +1,9 @@
 ﻿; Message d'accueil
 Msg := "Bonjour,`r`r"
 Msg .= "Voici mon scrip AutoHotKey pour répéter plusieurs fois l'action du personnage principale sur Dofus.`r"
-Msg .= "Appuyez sur <ESC> pour fermer le programme.`r`r`r"
+Msg .= "Appuyez sur <CTRL> + <ESC> pour fermer le programme.`r`r`r"
 Msg .= "Les fonctionnalités:`r`r"
-Msg .= "1) Click molette permet de faire les déplacements de toute sa team.`r`r"
+Msg .= "1) Click molette permet de déplacer le personnage actif et de passer au personnage suivant.`r`r"
 Msg .= "2) Click <Suivant> de la souris permet de switch au perso suivant`r`r"
 Msg .= "3) En appuyant sur <CTRL> + <NUMPAD> vous pouvez switch de personnage sur celui que vous voulez.`r`r"
 Msg .= "4) Pour déplacer sa team avec les flèches du clavier:`r"
@@ -110,9 +110,9 @@ move(d, comptes, x, y)
 				if WinExist(compte) 
 				{
 					WinActivate
-					if (Ind >= 2)
+					if (Ind == 2 || Ind == 4)
 					{
-						Random, ad, 150, 250
+						Random, ad, 50, 125
 						delay := delay + ad
 					}
 					Sleep % delay
@@ -142,37 +142,25 @@ heal(d, comptes, x, y)
 				if WinExist(compte) 
 				{
 					WinActivate
-					delay := d
-					if (Ind >= 2)
-					{
-						Random, ad, 150, 250
-						delay := delay + ad
-					}
-					Sleep % delay
+					Random, shortDelay, 250, 300
+					Sleep % d
+					
 					Click %x% %y%
 
-					Random, shortDelay, 100, 150
-					Sleep % shortDelay
+					Sleep shortDelay
 					Click %x% %y% Right
 
 					;Calcul des coordonnées pour utilisation multiples
 					xh := % x + 20
 					yh := % y - 175
-					Sleep % shortDelay
+					Sleep shortDelay
 					Click %xh% %yh%
 
 					;Saisie de la quantité à utiliser et validation automatique par la touche <Enter>
-					Sleep % shortDelay
+					Sleep shortDelay
 					Send, 700
-					Sleep, % shortDelay
+					Sleep shortDelay
 					Send, {Enter}
-
-					;Calcul des coordonnées pour valider
-					;xz := % x + 350
-					;yz := % y + 20
-					;Sleep % shortDelay
-					;MouseMove, xz, yz
-					;Click
 
 					res = % Ind
 				}
@@ -240,16 +228,32 @@ goto(name_page)
 		return
 
 
-	; Deplacement de la team avec les fleches <CTRL> + <UP, DOWN, LEFT, RIGHT>
+	; Deplacement de la team vec les fleches <CTRL> + <UP, DOWN, LEFT, RIGHT>
 	LCtrl & Up::index = % move(delayTime, comptes, ArrowUp[1], ArrowUp[2])
 	LCtrl & Down::index = % move(delayTime, comptes, ArrowDown[1], ArrowDown[2])
 	LCtrl & Left::index = % move(delayTime, comptes, ArrowLeft[1], ArrowLeft[2])
 	LCtrl & Right::index = % move(delayTime, comptes, ArrowRight[1], ArrowRight[2])
 
 	; Click Molette permet de deplacer toute sa team a la position du curseur
+	;MButton::
+	;	MouseGetPos, x, y
+	;	index = % move(delayTime, comptes, x, y)
+	;	return
+
+	; Click molette fait un click a la position du curseur et passe a la fenetre d'apres
 	MButton::
 		MouseGetPos, x, y
-		index = % move(delayTime, comptes, x, y)
+		Click %x% %y%
+		index += 1
+		if WinExist(comptes[index]) {
+			WinActivate
+		}
+		else {
+			index = 1
+			if WinExist(comptes[index]) {
+				WinActivate
+			}
+		}
 		return
 
 
@@ -268,46 +272,44 @@ goto(name_page)
 		}
 		return
 
-	; La touche <(> permet de faire un Alt + Esc
-	;(::Send, !{Esc}
 
 	;Ouvre la fenetre du perso 1
-	Numpad1::
+	^Numpad1::
 		goto(comptes[1])
 		index = 1
 		return
 	;Ouvre la fenetre du perso 2
-	Numpad2::
+	^Numpad2::
 		goto(comptes[2])
 		index = 2
 		return
 	;Ouvre la fenetre du perso 3
-	Numpad3::
+	^Numpad3::
 		goto(comptes[3])
 		index = 3
 		return
 	;Ouvre la fenetre du perso 4
-	Numpad4::
+	^Numpad4::
 		goto(comptes[4])
 		index = 4
 		return
 	;Ouvre la fenetre du perso 5
-	Numpad5::
+	^Numpad5::
 		goto(comptes[5])
 		index = 5
 		return
 	;Ouvre la fenetre du perso 6
-	Numpad6::
+	^Numpad6::
 		goto(comptes[6])
 		index = 6
 		return
 	;Ouvre la fenetre du perso 7
-	Numpad7::
+	^Numpad7::
 		goto(comptes[7])
 		index = 7
 		return
 	;Ouvre la fenetre du perso 8
-	Numpad8::
+	^Numpad8::
 		goto(comptes[8])
 		index = 8
 		return
@@ -315,16 +317,20 @@ goto(name_page)
 	;<Ctrl> + <h> permet de heal toute sa team
 	^h::
 		heal(delayTime, comptes, HealPosition[1], HealPosition[2])
+		goto(comptes[1])
+		Send {Enter}
 		return
 		
 	;<Ctrl> + <g> permet de heal toute sa team
 	^g::
 		heal(delayTime, comptes, EnergyPosition[1], EnergyPosition[2])
+		goto(comptes[1])
+		Send {Enter}
 		return
 	
 	;<Ctrl> + <Esc> permet de fermer le script
 	^Esc::
-	MsgBox, à bientot :)
-	ExitApp
+		MsgBox, A Bientot :)
+		ExitApp
 
-;******************	
+;******************
